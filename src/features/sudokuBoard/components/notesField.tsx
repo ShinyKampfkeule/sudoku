@@ -1,5 +1,6 @@
 import { PlayerSolutionInterface } from "@/src/interfaces/playerSolution";
 import { NotesNumber } from "./notesNumber";
+import { notedNumbers } from "../functions/notedNumbers";
 
 interface Props {
   index: number;
@@ -20,7 +21,7 @@ export const NotesField = ({
           : "border-transparent"
       }`}
     >
-      {currentPlayerSolution.notes[index].map((note) => (
+      {notedNumbers(currentPlayerSolution, index).map((note) => (
         <NotesNumber
           key={note}
           note={note}

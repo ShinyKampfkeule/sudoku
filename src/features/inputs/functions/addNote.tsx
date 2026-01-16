@@ -8,16 +8,14 @@ export const addNote = (
   setCurrentPlayerSolution: Dispatch<SetStateAction<PlayerSolutionInterface>>
 ) => {
   const newCurrentPlayerSolution = { ...currentPlayerSolution };
-  const stringedNum = num.toString();
 
-  if (newCurrentPlayerSolution.notes[activeField].includes(stringedNum)) {
-    newCurrentPlayerSolution.notes[activeField] =
-      newCurrentPlayerSolution.notes[activeField].filter(
-        (note) => note !== stringedNum
-      );
+  if (newCurrentPlayerSolution.notes[num].includes(activeField)) {
+    newCurrentPlayerSolution.notes[num] = newCurrentPlayerSolution.notes[
+      num
+    ].filter((field) => field !== activeField);
   } else {
-    newCurrentPlayerSolution.notes[activeField].push(stringedNum);
-    newCurrentPlayerSolution.notes[activeField].sort();
+    newCurrentPlayerSolution.notes[num].push(activeField);
+    newCurrentPlayerSolution.notes[num].sort();
   }
 
   setCurrentPlayerSolution(newCurrentPlayerSolution);
