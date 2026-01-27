@@ -1,24 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sudoku
+
+A modern, interactive Sudoku puzzle game built with Next.js, React, and TypeScript. Features keyboard and button controls, note-taking functionality, and a sleek UI.
+
+## Features
+
+- **Keyboard Controls**:
+  - Arrow keys or WASD to navigate
+  - Numbers 1-9 to fill cells
+  - Backspace/Delete to clear cells
+  - 'N' key to toggle note mode
+- **Note-Taking**: Add multiple candidate numbers to cells
+- **Real-Time Validation**: Instant feedback when puzzles are solved
+- **Responsive Design**: Works on desktop and tablet devices
+
+## Tech Stack
+
+- **Framework**: [Next.js](https://nextjs.org) 15+
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS with custom theme
+- **UI Components**: Radix UI primitives
+- **State Management**: React Hooks
+- **Icons**: Lucide React
 
 ## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- pnpm (or npm/yarn)
+
+### Installation
 
 First, run the development server:
 
 ```bash
+pnpm install
+pnpm dev
+# or
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to play.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Building
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm build
+pnpm start
+```
+
+## Project Structure
+
+```
+├── app/                          # Next.js app directory
+├── components/ui/                # Reusable UI components
+├── src/
+│   ├── features/
+│   │   ├── sudokuBoard/         # Board logic and components
+│   │   └── inputs/              # Input controls and buttons
+│   ├── interfaces/              # TypeScript interfaces
+│   ├── json/                    # Puzzle data
+│   └── functions/               # Utility functions
+└── lib/                         # Helper utilities
+```
 
 ## Learn More
 
@@ -29,8 +75,14 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Features in Development
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Undo/Redo functionality
+- Hint system
+- Eraser tool
+- Multiple difficulty levels
+- Save game progress
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+This project is open source and available under the MIT License.

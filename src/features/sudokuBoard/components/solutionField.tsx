@@ -5,7 +5,7 @@ interface Props {
 }
 
 export const SolutionField = ({ number, activeField, index }: Props) => {
-  let numberClasses = `w-12 h-12 rounded-xl flex justify-center items-center ${
+  let numberClasses = `w-12 h-12 rounded-lg flex justify-center items-center ${
     activeField === index && "border-white border-2"
   }`;
 

@@ -15,10 +15,8 @@ export const NotesField = ({
 }: Props) => {
   return (
     <div
-      className={`w-12 h-12 grid gap-0.5 grid-cols-3 grid-rows-3 gap-0.2 rounded-xl border-2 ${
-        activeField === index
-          ? "border-white overflow-hidden"
-          : "border-transparent"
+      className={`w-12 h-12 grid gap-0.5 grid-cols-3 grid-rows-3 rounded-lg border-2 overflow-hidden bg-white/10 ${
+        activeField === index ? "border-white" : "border-transparent"
       }`}
     >
       {notedNumbers(currentPlayerSolution, index).map((note) => (

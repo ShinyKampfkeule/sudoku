@@ -19,17 +19,17 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
-        1: "bg-[#4152F1] rounded-md text-white text-3xl font-normal cursor-pointer hover:brightness-90",
-        2: "bg-[#009700] rounded-md text-white text-3xl font-normal cursor-pointer hover:brightness-90",
-        3: "bg-[#790CFF] rounded-md text-white text-3xl font-normal cursor-pointer hover:brightness-90",
-        4: "bg-[#DA8F03] rounded-md text-white text-3xl font-normal cursor-pointer hover:brightness-90",
-        5: "bg-[#FF60DF] rounded-md text-white text-3xl font-normal cursor-pointer hover:brightness-90",
-        6: "bg-[#46B57A] rounded-md text-white text-3xl font-normal cursor-pointer hover:brightness-90",
-        7: "bg-[#E23250] rounded-md text-white text-3xl font-normal cursor-pointer hover:brightness-90",
-        8: "bg-[#23B0B7] rounded-md text-white text-3xl font-normal cursor-pointer hover:brightness-90",
-        9: "bg-[#933EC8] rounded-md text-white text-3xl font-normal cursor-pointer hover:brightness-90",
+        1: "bg-[#4152F1] rounded-lg text-white text-3xl font-normal cursor-pointer hover:brightness-90",
+        2: "bg-[#009700] rounded-lg text-white text-3xl font-normal cursor-pointer hover:brightness-90",
+        3: "bg-[#790CFF] rounded-lg text-white text-3xl font-normal cursor-pointer hover:brightness-90",
+        4: "bg-[#DA8F03] rounded-lg text-white text-3xl font-normal cursor-pointer hover:brightness-90",
+        5: "bg-[#FF60DF] rounded-lg text-white text-3xl font-normal cursor-pointer hover:brightness-90",
+        6: "bg-[#46B57A] rounded-lg text-white text-3xl font-normal cursor-pointer hover:brightness-90",
+        7: "bg-[#E23250] rounded-lg text-white text-3xl font-normal cursor-pointer hover:brightness-90",
+        8: "bg-[#23B0B7] rounded-lg text-white text-3xl font-normal cursor-pointer hover:brightness-90",
+        9: "bg-[#933EC8] rounded-lg text-white text-3xl font-normal cursor-pointer hover:brightness-90",
         gameplayInput:
-          "bg-[#134108] rounded-md text-white cursor-pointer hover:brightness-90",
+          "bg-[#134108] rounded-lg text-white cursor-pointer hover:brightness-90",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
@@ -45,7 +45,7 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
+  },
 );
 
 function Button({

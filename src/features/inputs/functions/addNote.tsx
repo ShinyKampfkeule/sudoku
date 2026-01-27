@@ -1,11 +1,9 @@
 import { PlayerSolutionInterface } from "@/src/interfaces/playerSolution";
-import { Dispatch, SetStateAction } from "react";
 
 export const addNote = (
   currentPlayerSolution: PlayerSolutionInterface,
   num: number,
   activeField: number,
-  setCurrentPlayerSolution: Dispatch<SetStateAction<PlayerSolutionInterface>>
 ) => {
   const newCurrentPlayerSolution = { ...currentPlayerSolution };
 
@@ -18,5 +16,5 @@ export const addNote = (
     newCurrentPlayerSolution.notes[num].sort();
   }
 
-  setCurrentPlayerSolution(newCurrentPlayerSolution);
+  return newCurrentPlayerSolution;
 };

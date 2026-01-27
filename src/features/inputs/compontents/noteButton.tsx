@@ -22,7 +22,7 @@ export const NoteButton = ({
       <NoteButtonField
         num={num}
         displayNumber={num === i}
-      />
+      />,
     );
   }
 
@@ -30,13 +30,13 @@ export const NoteButton = ({
     <div
       className={`row-span-2 row-start-${num} col-start-${
         num % 2 === 1 ? 1 : 2
-      } grid grid-cols-3 grid-rows-3 gap-0.5 cursor-pointer hover:bg-gray-100/10 rounded-md`}
+      } grid grid-cols-3 grid-rows-3 gap-0.5 cursor-pointer hover:bg-gray-100/10 rounded-lg`}
       onClick={() =>
         addNote(
           currentPlayerSolution,
           num,
           activeField,
-          setCurrentPlayerSolution
+          setCurrentPlayerSolution,
         )
       }
     >

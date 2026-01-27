@@ -3,6 +3,7 @@ import { GameplayInputs } from "./gameplayInputs";
 import { NumberInputs } from "./numberInputs";
 import { NoteInputs } from "./noteInputs";
 import { PlayerSolutionInterface } from "@/src/interfaces/playerSolution";
+import { MoveHistoryInterface } from "@/src/interfaces/moveHistory";
 
 interface Props {
   activeField: number;
@@ -10,6 +11,9 @@ interface Props {
   setCurrentPlayerSolution: Dispatch<SetStateAction<PlayerSolutionInterface>>;
   noteMode: boolean;
   setNoteMode: Dispatch<SetStateAction<boolean>>;
+  moveHistory: MoveHistoryInterface[];
+  setActiveField: Dispatch<SetStateAction<number>>;
+  setMoveHistory: Dispatch<SetStateAction<MoveHistoryInterface[]>>;
 }
 
 export const InputsContainer = ({
@@ -18,6 +22,9 @@ export const InputsContainer = ({
   setCurrentPlayerSolution,
   noteMode,
   setNoteMode,
+  moveHistory,
+  setActiveField,
+  setMoveHistory,
 }: Props) => {
   return (
     <div className="flex flex-col items-center gap-4">
@@ -39,6 +46,10 @@ export const InputsContainer = ({
       <GameplayInputs
         noteMode={noteMode}
         setNoteMode={setNoteMode}
+        moveHistory={moveHistory}
+        setCurrentPlayerSolution={setCurrentPlayerSolution}
+        setActiveField={setActiveField}
+        setMoveHistory={setMoveHistory}
       />
     </div>
   );
