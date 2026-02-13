@@ -2,12 +2,24 @@ interface Props {
   number: string;
   activeField: number;
   index: number;
+  playerBoard: boolean;
 }
 
-export const SolutionField = ({ number, activeField, index }: Props) => {
-  let numberClasses = `w-12 h-12 rounded-lg flex justify-center items-center ${
+export const SolutionField = ({
+  number,
+  activeField,
+  index,
+  playerBoard,
+}: Props) => {
+  let numberClasses = `rounded-lg flex justify-center items-center ${
     activeField === index && "border-white border-2"
   }`;
+
+  if (playerBoard) {
+    numberClasses += " w-12 h-12";
+  } else {
+    numberClasses += " w-8 h-8";
+  }
 
   if (number !== "x") {
     switch (number) {
@@ -43,7 +55,11 @@ export const SolutionField = ({ number, activeField, index }: Props) => {
 
   return (
     <div className={numberClasses}>
-      {number !== "x" && <span className="text-3xl text-white">{number}</span>}
+      {number !== "x" && (
+        <span className={`${playerBoard ? "text-3xl" : "text-2xl"} text-white`}>
+          {number}
+        </span>
+      )}
     </div>
   );
 };
