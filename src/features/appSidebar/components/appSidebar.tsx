@@ -14,10 +14,10 @@ export const AppSidebar = () => {
       <div className=" flex items-end px-4 py-2 text-2xl h-16">
         <span>Sudokuell</span>
       </div>
-      <div className="grow pt-2">
+      <div className="grow pt-2 flex flex-col gap-1">
         <SidebarEntry
           icon={<House />}
-          label="Lobby"
+          label="Dashboard"
         />
         <SidebarEntry
           icon={<Gamepad2 />}
@@ -32,7 +32,7 @@ export const AppSidebar = () => {
           label="Messages"
         />
       </div>
-      <div className="pb-2">
+      <div className="pb-2 flex flex-col gap-1">
         <SidebarEntry
           icon={<Settings2 />}
           label="Settings"
