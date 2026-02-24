@@ -29,13 +29,13 @@ app.prepare().then(() => {
     }
 
     const username = socket.handshake.auth.username;
+    const userID = socket.handshake.auth.userID;
 
     if (!username) {
       return next(new Error("invalid username"));
     }
 
     const newSessionID = randomUUID();
-    const userID = randomUUID();
 
     socket.sessionID = newSessionID;
     socket.userID = userID;
@@ -56,6 +56,8 @@ app.prepare().then(() => {
       userID: socket.id,
       username: socket.username,
     });
+
+    socket.join("Lobby");
 
     socket.on("activeField", (activeField: number) => {
       socket.broadcast.emit("activeField", activeField);
@@ -88,6 +90,14 @@ app.prepare().then(() => {
       }
 
       socket.emit("users", users);
+    });
+
+    socket.on("sendMessage", (data: { message: string }) => {
+      io.to("Lobby").emit("receiveMessage", {
+        sender: socket.username,
+        message: data.message,
+        timestamp: Date.now(),
+      });
     });
   });
 

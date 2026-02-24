@@ -3,6 +3,11 @@
 import { Header } from "@/src/features/header/components/header";
 import { useEffect, useState } from "react";
 import { socket } from "../socket";
+import { ChatArea } from "@/src/features/chatArea/components/chatArea";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+import { LoadingOverlay } from "@/src/features/loadingOverlay/loadingOverlay";
+import { onSession } from "@/src/functions/onSession";
 
 export default function Dashboard() {
   const [isConnected, setIsConnected] = useState(false);
@@ -11,34 +16,27 @@ export default function Dashboard() {
   const [users, setUsers] = useState<{ userID: string; username: string }[]>(
     [],
   );
-
-  // const sessionID = localStorage.getItem("sessionID");
-  // console.log(sessionID);
-
-  // const onSession = (data: { sessionID: string; userID: string }) => {
-  //   socket.auth = { sessionID: data.sessionID };
-  //   localStorage.setItem("sessionID", data.sessionID);
-  //   socket.userID = userID;
-  // };
-
-  // socket.on("session", onSession);
-
-  // socket.auth = { username };
-  // socket.connect();
-  // router.push("/dashboard");
+  const router = useRouter();
+  const { data: session, isPending } = authClient.useSession();
 
   useEffect(() => {
-    const sessionID = localStorage.getItem("sessionID");
+    if (!isPending && !session) {
+      router.push("/");
+    } else if (session) {
+      const sessionID = localStorage.getItem("sessionID");
+      if (sessionID) {
+        socket.auth = { sessionID };
+        socket.connect();
+      }
 
-    if (sessionID) {
-      socket.auth = { sessionID };
+      socket.on("session", onSession);
+
+      socket.auth = { username: session.user.name, userID: session.user.id };
       socket.connect();
-    }
 
-    if (socket.connected) {
-      onConnect();
-
-      socket.emit("getUsers", { user: socket.id });
+      if (socket.connected) {
+        onConnect();
+      }
     }
 
     function onConnect() {
@@ -85,14 +83,15 @@ export default function Dashboard() {
       socket.off("users", onUsers);
       socket.off("userConnected", onUserConnected);
     };
-  }, []);
+  }, [isPending, router, session]);
 
   return (
-    <div className="grow flex flex-col px-4 pt-4 gap-32">
+    <div className="w-screen h-screen flex flex-col px-4 pt-4 gap-32">
+      {isPending && <LoadingOverlay />}
       <Header />
-      <div className="grow flex gap-4">
+      <div className="flex-1 min-h-0 flex gap-4">
         <div className="bg-primary grow rounded-t-md"></div>
-        <div className="bg-primary w-80 rounded-t-md"></div>
+        <ChatArea />
       </div>
     </div>
   );

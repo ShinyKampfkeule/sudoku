@@ -1,5 +1,4 @@
 import { authClient } from "@/lib/auth-client";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export const UserInfo = () => {
@@ -14,11 +13,6 @@ export const UserInfo = () => {
       if (res.ok) {
         const json = await res.json();
         setProfile(json.user);
-      }
-
-      const image_res = await fetch(`/api/user/image/${session.user.name}`);
-      if (image_res.ok) {
-        console.log(image_res);
       }
     })();
   }, [session]);

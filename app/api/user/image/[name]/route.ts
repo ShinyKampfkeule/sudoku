@@ -10,6 +10,6 @@ export async function GET(
   const image = await fetch(`https://robohash.org/${name}?set=set4`);
 
   if (!image) return NextResponse.json({ error: "Not found" }, { status: 404 });
-  console.log(image);
+
   return NextResponse.json(image);
 }
