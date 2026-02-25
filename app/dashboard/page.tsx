@@ -8,6 +8,7 @@ import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { LoadingOverlay } from "@/src/features/loadingOverlay/loadingOverlay";
 import { onSession } from "@/src/functions/onSession";
+import { DashboardContainer } from "@/src/features/dashboardContainer/components/dashboardContainer";
 
 export default function Dashboard() {
   const [isConnected, setIsConnected] = useState(false);
@@ -90,7 +91,7 @@ export default function Dashboard() {
       {isPending && <LoadingOverlay />}
       <Header />
       <div className="flex-1 min-h-0 flex gap-4">
-        <div className="bg-primary grow rounded-t-md"></div>
+        <DashboardContainer />
         <ChatArea />
       </div>
     </div>
