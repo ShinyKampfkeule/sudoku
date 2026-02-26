@@ -72,9 +72,10 @@ app.prepare().then(() => {
       socket.emit("gameCreated", { room: "test" });
     });
 
-    socket.on("joinGame", (data: { room: string }) => {
+    socket.on("joinRoom", (data: { room: string }) => {
+      console.log("Room ID: " + data.room);
       socket.join(data.room);
-      socket.emit("gameJoined", { room: data.room });
+      socket.emit("roomJoined", { room: data.room });
     });
 
     socket.on("getUsers", (data: { user: string }) => {
@@ -98,6 +99,17 @@ app.prepare().then(() => {
         message: data.message,
         timestamp: Date.now(),
       });
+    });
+
+    socket.on("getUsersInRoom", (data: { room: string }) => {
+      let size = 0;
+
+      console.log(data.room);
+      const room = io.sockets.adapter.rooms.get(data.room);
+      console.log(room);
+      if (room) size = room.size;
+
+      socket.emit("usersInRoom", size);
     });
   });
 

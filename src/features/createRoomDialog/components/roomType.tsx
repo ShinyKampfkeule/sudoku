@@ -5,11 +5,11 @@ import { updateRoomType } from "../functions/updateRoomType";
 import { Label } from "@/components/ui/label";
 
 interface Props {
-  roomType: string;
+  isPublic: boolean;
   setGameRoomData: Dispatch<SetStateAction<GameRoomData>>;
 }
 
-export const RoomType = ({ roomType, setGameRoomData }: Props) => {
+export const RoomType = ({ isPublic, setGameRoomData }: Props) => {
   return (
     <div className="flex flex-col gap-2">
       <Label>Room Type</Label>
@@ -19,7 +19,7 @@ export const RoomType = ({ roomType, setGameRoomData }: Props) => {
         spacing={2}
         defaultValue="open"
         size="sm"
-        value={roomType}
+        value={isPublic ? "open" : "private"}
         onValueChange={(value: "open" | "private") =>
           updateRoomType(value, setGameRoomData)
         }

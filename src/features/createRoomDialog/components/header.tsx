@@ -4,11 +4,16 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-export const Header = () => {
+export interface Props {
+  title: string;
+  description: string;
+}
+
+export const Header = ({ title, description }: Props) => {
   return (
     <DialogHeader>
-      <DialogTitle>Create Room</DialogTitle>
-      <DialogDescription>Create a new Game</DialogDescription>
+      <DialogTitle>{title}</DialogTitle>
+      <DialogDescription>{description}</DialogDescription>
     </DialogHeader>
   );
 };

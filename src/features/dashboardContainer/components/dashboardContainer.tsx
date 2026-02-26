@@ -1,6 +1,4 @@
-import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Earth, KeyRound, Users } from "lucide-react";
 import { GameButtons } from "./gameButtons";
 
 export const DashboardContainer = () => {

@@ -76,3 +76,16 @@ model Verification {
   @@index([identifier])
   @@map("verification")
 }
+
+model GameRooms {
+	id	String	@id	@default(uuid())
+	name	String
+	public	Boolean
+	visible	Boolean
+	password	String
+	gameMode	String
+	puzzleDifficulty	String
+	active	Boolean	@default(true)
+
+	@@map("gameRooms")
+}

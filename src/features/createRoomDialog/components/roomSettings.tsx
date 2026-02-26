@@ -3,6 +3,7 @@ import { GameRoomData } from "@/src/interfaces/gameRoomData";
 import { Dispatch, SetStateAction } from "react";
 import { RoomName } from "./roomName";
 import { RoomPassword } from "./roomPassword";
+import { RoomVisibility } from "./roomVisibility";
 
 interface Props {
   gameRoomData: GameRoomData;
@@ -16,11 +17,18 @@ export const RoomSettings = ({ gameRoomData, setGameRoomData }: Props) => {
         gameRoomData={gameRoomData}
         setGameRoomData={setGameRoomData}
       />
-      <RoomType
-        roomType={gameRoomData.roomType}
-        setGameRoomData={setGameRoomData}
-      />
-      {gameRoomData.roomType === "private" && (
+      <div className="flex gap-16">
+        <RoomType
+          isPublic={gameRoomData.public}
+          setGameRoomData={setGameRoomData}
+        />
+        <RoomVisibility
+          isVisible={gameRoomData.visible}
+          setGameRoomData={setGameRoomData}
+          isPublic={gameRoomData.public}
+        />
+      </div>
+      {!gameRoomData.public && (
         <RoomPassword
           gameRoomData={gameRoomData}
           setGameRoomData={setGameRoomData}
