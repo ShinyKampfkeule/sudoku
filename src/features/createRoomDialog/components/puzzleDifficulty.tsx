@@ -1,11 +1,12 @@
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { GameRoomData } from "@/src/interfaces/gameRoomData";
+import { CreateRoomDataInterface } from "@/src/interfaces/createRoomData";
 import { Dispatch, SetStateAction } from "react";
 import { updatePuzzleDifficulty } from "../functions/updatePuzzleDifficulty";
+import { PuzzleDifficultyType } from "@/src/types/puzzleDifficulty";
 
 interface Props {
-  setGameRoomData: Dispatch<SetStateAction<GameRoomData>>;
-  puzzleDifficulty: "easy" | "medium" | "hard";
+  setGameRoomData: Dispatch<SetStateAction<CreateRoomDataInterface>>;
+  puzzleDifficulty: PuzzleDifficultyType;
 }
 
 export const PuzzleDifficulty = ({
@@ -22,7 +23,7 @@ export const PuzzleDifficulty = ({
         defaultValue="easy"
         size="sm"
         value={puzzleDifficulty}
-        onValueChange={(value: "easy" | "medium" | "hard") =>
+        onValueChange={(value: PuzzleDifficultyType) =>
           updatePuzzleDifficulty(value, setGameRoomData)
         }
       >

@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { DialogContent, DialogFooter } from "@/components/ui/dialog";
-import { Header } from "./header";
+import { Header } from "../../dialog/header";
 import { Dispatch, SetStateAction, useState } from "react";
-import { GameRoomData } from "@/src/interfaces/gameRoomData";
+import { CreateRoomDataInterface } from "@/src/interfaces/createRoomData";
 import { RoomSettings } from "./roomSettings";
 import { GameSettings } from "./gameSettings";
 import { socket } from "@/app/socket";
+import { useRouter } from "next/navigation";
 
 interface Props {
   setOpenDialog: Dispatch<SetStateAction<boolean>>;
@@ -13,8 +14,9 @@ interface Props {
 }
 
 export const CreateRoomDialog = ({ setOpenDialog, dialogType }: Props) => {
-  const [gameRoomData, setGameRoomData] = useState<GameRoomData>({
-    roomName: "",
+  const router = useRouter();
+  const [gameRoomData, setGameRoomData] = useState<CreateRoomDataInterface>({
+    name: "",
     public: true,
     visible: true,
     password: "",
@@ -32,8 +34,8 @@ export const CreateRoomDialog = ({ setOpenDialog, dialogType }: Props) => {
     });
     if (response.ok) {
       const roomData = await response.json();
-      console.log(roomData);
       socket.emit("joinRoom", { room: roomData.room.id });
+      router.push(`/room/${roomData.room.id}`);
       setOpenDialog(false);
     }
   };

@@ -1,11 +1,12 @@
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { GameRoomData } from "@/src/interfaces/gameRoomData";
+import { CreateRoomDataInterface } from "@/src/interfaces/createRoomData";
 import { Dispatch, SetStateAction } from "react";
 import { updateGameMode } from "../functions/updateGameMode";
+import { GameModeType } from "@/src/types/gameMode";
 
 interface Props {
-  setGameRoomData: Dispatch<SetStateAction<GameRoomData>>;
-  gameMode: "speed" | "points" | "bestOf";
+  setGameRoomData: Dispatch<SetStateAction<CreateRoomDataInterface>>;
+  gameMode: GameModeType;
 }
 
 export const GameMode = ({ setGameRoomData, gameMode }: Props) => {
@@ -19,7 +20,7 @@ export const GameMode = ({ setGameRoomData, gameMode }: Props) => {
         defaultValue="speed"
         size="sm"
         value={gameMode}
-        onValueChange={(value: "speed" | "points" | "bestOf") =>
+        onValueChange={(value: GameModeType) =>
           updateGameMode(value, setGameRoomData)
         }
       >

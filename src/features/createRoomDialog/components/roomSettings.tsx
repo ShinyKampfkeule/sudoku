@@ -1,13 +1,13 @@
 import { RoomType } from "./roomType";
-import { GameRoomData } from "@/src/interfaces/gameRoomData";
+import { CreateRoomDataInterface } from "@/src/interfaces/createRoomData";
 import { Dispatch, SetStateAction } from "react";
 import { RoomName } from "./roomName";
 import { RoomPassword } from "./roomPassword";
 import { RoomVisibility } from "./roomVisibility";
 
 interface Props {
-  gameRoomData: GameRoomData;
-  setGameRoomData: Dispatch<SetStateAction<GameRoomData>>;
+  gameRoomData: CreateRoomDataInterface;
+  setGameRoomData: Dispatch<SetStateAction<CreateRoomDataInterface>>;
 }
 
 export const RoomSettings = ({ gameRoomData, setGameRoomData }: Props) => {

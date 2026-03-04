@@ -1,12 +1,12 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { GameRoomData } from "@/src/interfaces/gameRoomData";
+import { CreateRoomDataInterface } from "@/src/interfaces/createRoomData";
 import { Dispatch, SetStateAction } from "react";
 import { handleRoomInput } from "../functions/handleRoomInput";
 
 interface Props {
-  gameRoomData: GameRoomData;
-  setGameRoomData: Dispatch<SetStateAction<GameRoomData>>;
+  gameRoomData: CreateRoomDataInterface;
+  setGameRoomData: Dispatch<SetStateAction<CreateRoomDataInterface>>;
 }
 
 export const RoomName = ({ gameRoomData, setGameRoomData }: Props) => {
@@ -15,9 +15,9 @@ export const RoomName = ({ gameRoomData, setGameRoomData }: Props) => {
       <Label>Room Name</Label>
       <Input
         placeholder="Room Name"
-        name="roomName"
-        value={gameRoomData.roomName}
-        onInput={(input) => handleRoomInput(input, setGameRoomData, "roomName")}
+        name="name"
+        value={gameRoomData.name}
+        onInput={(input) => handleRoomInput(input, setGameRoomData, "name")}
       />
     </div>
   );

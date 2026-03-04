@@ -1,12 +1,12 @@
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { GameRoomData } from "@/src/interfaces/gameRoomData";
+import { CreateRoomDataInterface } from "@/src/interfaces/createRoomData";
 import { Dispatch, SetStateAction } from "react";
 import { Label } from "@/components/ui/label";
 import { updateRoomVisibility } from "../functions/updateRoomVisibility";
 
 interface Props {
   isVisible: boolean;
-  setGameRoomData: Dispatch<SetStateAction<GameRoomData>>;
+  setGameRoomData: Dispatch<SetStateAction<CreateRoomDataInterface>>;
   isPublic: boolean;
 }
 

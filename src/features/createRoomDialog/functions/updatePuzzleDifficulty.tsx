@@ -1,9 +1,10 @@
-import { GameRoomData } from "@/src/interfaces/gameRoomData";
+import { CreateRoomDataInterface } from "@/src/interfaces/createRoomData";
+import { PuzzleDifficultyType } from "@/src/types/puzzleDifficulty";
 import { Dispatch, SetStateAction } from "react";
 
 export const updatePuzzleDifficulty = (
-  value: "easy" | "medium" | "hard",
-  setGameRoomData: Dispatch<SetStateAction<GameRoomData>>,
+  value: PuzzleDifficultyType,
+  setGameRoomData: Dispatch<SetStateAction<CreateRoomDataInterface>>,
 ) => {
   setGameRoomData((prev) => ({
     ...prev,

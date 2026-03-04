@@ -7,29 +7,7 @@ export const Chat = () => {
   const [chatStatus, setChatStatus] = useState<string>("Connecting...");
   const [messages, setMessages] = useState<
     { sender: string; message: string; sent: number }[]
-  >([
-    // {
-    //   sender: "Kampfkeule",
-    //   message:
-    //     "Hello, this is a static message. Hello, this is a static message. Hello, this is a static message. Hello, this is a static message.",
-    //   sent: 1771934436,
-    // },
-    // {
-    //   sender: "ShinyKampfkeule",
-    //   message: "Hello, this is also a Message!",
-    //   sent: 1771934445,
-    // },
-    // {
-    //   sender: "Lyria Lotusgrau",
-    //   message: "Hey, somebody wanna play a Game?",
-    //   sent: 1771934750,
-    // },
-    // {
-    //   sender: "ShinyKampfkeule",
-    //   message: "Purrfect Timing, i was about to join a random room.",
-    //   sent: 1771934755,
-    // },
-  ]);
+  >([]);
 
   useEffect(() => {
     socket.on("connect", onConnect);

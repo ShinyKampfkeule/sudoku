@@ -89,10 +89,10 @@ export default function Dashboard() {
   return (
     <div className="w-screen h-screen flex flex-col px-4 pt-4 gap-32">
       {isPending && <LoadingOverlay />}
-      <Header />
+      <Header title="Dashboard" />
       <div className="flex-1 min-h-0 flex gap-4">
         <DashboardContainer />
-        <ChatArea />
+        <ChatArea initialRoomData={{ id: "lobby", name: "Lobby" }} />
       </div>
     </div>
   );

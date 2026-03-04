@@ -1,13 +1,16 @@
 import { socket } from "@/app/socket";
+import { AvailableRoomDataInterface } from "@/src/interfaces/availableRoomData";
 import { LockKeyhole } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface Props {
-  room: any;
+  room: AvailableRoomDataInterface;
 }
 
 export const RoomEntry = ({ room }: Props) => {
   const [usersInRoom, setUsersInRoom] = useState<number>(0);
+  const router = useRouter();
 
   useEffect(() => {
     socket.on("usersInRoom", (size: number) => {
@@ -19,8 +22,15 @@ export const RoomEntry = ({ room }: Props) => {
     });
   }, [room]);
 
+  const joinRoom = () => {
+    router.push(`/room/${room.id}`);
+  };
+
   return (
-    <div className="flex gap-2">
+    <div
+      className="flex gap-2 cursor-pointer hover:bg-primary p-2 rounded-md"
+      onClick={joinRoom}
+    >
       <span>{room.name}</span>
       <span>{room.gameMode}</span>
       <span>{room.puzzleDifficulty}</span>

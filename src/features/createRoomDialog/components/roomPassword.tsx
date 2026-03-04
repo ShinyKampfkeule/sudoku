@@ -1,16 +1,16 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { GameRoomData } from "@/src/interfaces/gameRoomData";
+import { CreateRoomDataInterface } from "@/src/interfaces/createRoomData";
 import { Dispatch, SetStateAction } from "react";
 import { handleRoomInput } from "../functions/handleRoomInput";
 
 interface Props {
-  gameRoomData: GameRoomData;
-  setGameRoomData: Dispatch<SetStateAction<GameRoomData>>;
+  gameRoomData: CreateRoomDataInterface;
+  setGameRoomData: Dispatch<SetStateAction<CreateRoomDataInterface>>;
 }
 
 export const RoomPassword = ({ gameRoomData, setGameRoomData }: Props) => {
-  if (gameRoomData.roomType === "open") return;
+  if (gameRoomData.public) return;
 
   return (
     <div className="flex flex-col gap-2">

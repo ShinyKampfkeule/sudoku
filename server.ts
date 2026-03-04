@@ -57,7 +57,7 @@ app.prepare().then(() => {
       username: socket.username,
     });
 
-    socket.join("Lobby");
+    socket.join("lobby");
 
     socket.on("activeField", (activeField: number) => {
       socket.broadcast.emit("activeField", activeField);
@@ -73,9 +73,15 @@ app.prepare().then(() => {
     });
 
     socket.on("joinRoom", (data: { room: string }) => {
-      console.log("Room ID: " + data.room);
       socket.join(data.room);
       socket.emit("roomJoined", { room: data.room });
+
+      let size = 0;
+
+      const room = io.sockets.adapter.rooms.get(data.room);
+      if (room) size = room.size;
+
+      io.in(data.room).emit("usersInRoom", size);
     });
 
     socket.on("getUsers", (data: { user: string }) => {
@@ -93,8 +99,8 @@ app.prepare().then(() => {
       socket.emit("users", users);
     });
 
-    socket.on("sendMessage", (data: { message: string }) => {
-      io.to("Lobby").emit("receiveMessage", {
+    socket.on("sendMessage", (data: { message: string; roomID: string }) => {
+      io.to(data.roomID).emit("receiveMessage", {
         sender: socket.username,
         message: data.message,
         timestamp: Date.now(),
@@ -104,7 +110,6 @@ app.prepare().then(() => {
     socket.on("getUsersInRoom", (data: { room: string }) => {
       let size = 0;
 
-      console.log(data.room);
       const room = io.sockets.adapter.rooms.get(data.room);
       console.log(room);
       if (room) size = room.size;

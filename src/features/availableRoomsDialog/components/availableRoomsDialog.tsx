@@ -1,10 +1,11 @@
 import { DialogContent, DialogFooter } from "@/components/ui/dialog";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Header } from "./header";
+import { Header } from "../../dialog/header";
 import { Button } from "@/components/ui/button";
 import { RoomEntry } from "./roomEntry";
 import { getAvailableRooms } from "../functions/getAvailableRooms";
 import { RefreshCw } from "lucide-react";
+import { AvailableRoomDataInterface } from "@/src/interfaces/availableRoomData";
 
 interface Props {
   setOpenDialog: Dispatch<SetStateAction<boolean>>;
@@ -12,7 +13,7 @@ interface Props {
 }
 
 export const AvailableRoomsDialog = ({ setOpenDialog, dialogType }: Props) => {
-  const [rooms, setRooms] = useState<any[]>([]);
+  const [rooms, setRooms] = useState<AvailableRoomDataInterface[]>([]);
 
   useEffect(() => {
     (async () => {

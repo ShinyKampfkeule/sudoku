@@ -1,8 +1,19 @@
+import { socket } from "@/app/socket";
+import { useEffect, useState } from "react";
+
 export const OnlineCounter = () => {
+  const [usersInRoom, setUsersInRoom] = useState<number>(0);
+
+  useEffect(() => {
+    socket.on("usersInRoom", (size: number) => {
+      setUsersInRoom(size);
+    });
+  }, []);
+
   return (
     <div className="flex items-center gap-2.5">
       <div className="bg-accent w-2 h-2 rounded-full" />
-      <span className="text-accent">100</span>
+      <span className="text-accent">{usersInRoom}</span>
     </div>
   );
 };

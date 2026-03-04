@@ -4,7 +4,11 @@ import { MessageInput } from "./messageInput";
 import { FormEvent } from "react";
 import { socket } from "@/app/socket";
 
-export const Message = () => {
+interface Props {
+  roomID: string;
+}
+
+export const Message = ({ roomID }: Props) => {
   const sentMessage = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -13,7 +17,7 @@ export const Message = () => {
     console.log("Sent Message");
     console.log(message);
 
-    socket.emit("sendMessage", { message });
+    socket.emit("sendMessage", { message, roomID });
   };
 
   return (

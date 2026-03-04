@@ -3,7 +3,7 @@ import { Dialog } from "@/components/ui/dialog";
 import { Earth, KeyRound, Users } from "lucide-react";
 import { CreateRoomDialog } from "../../createRoomDialog/components/createRoomDialog";
 import { useState } from "react";
-import { AvailableRoomsDialog } from "../../createRoomDialog/components/availableRoomsDialog";
+import { AvailableRoomsDialog } from "../../availableRoomsDialog/components/availableRoomsDialog";
 
 export const GameButtons = () => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);

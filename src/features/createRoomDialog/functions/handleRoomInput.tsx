@@ -1,10 +1,10 @@
-import { GameRoomData } from "@/src/interfaces/gameRoomData";
+import { CreateRoomDataInterface } from "@/src/interfaces/createRoomData";
 import { Dispatch, FormEvent, SetStateAction } from "react";
 
 export const handleRoomInput = (
   input: FormEvent<HTMLInputElement>,
-  setGameRoomData: Dispatch<SetStateAction<GameRoomData>>,
-  key: "roomName" | "password",
+  setGameRoomData: Dispatch<SetStateAction<CreateRoomDataInterface>>,
+  key: "name" | "password",
 ) => {
   setGameRoomData((prev) => ({
     ...prev,
