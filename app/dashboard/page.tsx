@@ -22,8 +22,10 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!isPending && !session) {
+      console.log(session);
       router.push("/");
     } else if (session) {
+      console.log(session);
       const sessionID = localStorage.getItem("sessionID");
       if (sessionID) {
         socket.auth = { sessionID };
