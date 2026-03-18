@@ -32,11 +32,11 @@ export const Chat = () => {
 
   return (
     <ScrollArea
-      className="flex-1 min-h-0 border-b border-b-secondary"
+      className="flex-1 min-h-0 border-b"
       viewportClassName="flex flex-col-reverse"
     >
       <div className="flex flex-col p-4 gap-4">
-        <div className="flex justify-center items-center bg-secondary/10 h-8">
+        <div className="flex justify-center items-center bg-secondary/30 h-8">
           <span>{chatStatus}</span>
         </div>
         {messages.map((message, index) => (

@@ -9,10 +9,10 @@ export const LoginForm = () => {
 
   return (
     <form
-      className="flex flex-col items-center justify-center gap-8 text-white"
+      className="flex flex-col items-center justify-center gap-8 min-w-116 min-h-150 rounded-lg z-1 bg-background/20 p-16 backdrop-blur-lg shadow-xl"
       onSubmit={handleSubmit}
     >
-      <h1 className="text-5xl text-secondary mb-16">Sudokuell</h1>
+      <h1 className="text-5xl text-foreground mb-16">Sudokuell</h1>
       <CredentialsInputs createMode={createMode} />
       <ConfirmAndType
         setCreateMode={setCreateMode}

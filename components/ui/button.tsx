@@ -10,18 +10,17 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-accent text-accent-foreground hover:bg-accent/50 cursor-pointer",
+          "bg-accent text-accent-foreground hover:bg-accent/75 cursor-pointer",
         sendMessage:
           "bg-secondary text-secondary-foreground hover:bg-secondary/50 cursor-pointer",
         destructive:
           "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-        outline:
-          "border shadow-xs hover:bg-accent dark:border-input dark:hover:bg-input/10 cursor-pointer",
+        outline: "border shadow-xs hover:bg-secondary/40 cursor-pointer",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost:
           "hover:bg-accent hover:text-primary dark:hover:bg-accent cursor-pointer",
-        link: "text-secondary underline-offset-4 hover:underline cursor-pointer",
+        link: "text-accent underline-offset-4 hover:underline cursor-pointer",
         1: "bg-[#4152F1] rounded-lg text-white text-3xl font-normal cursor-pointer hover:brightness-90",
         2: "bg-[#009700] rounded-lg text-white text-3xl font-normal cursor-pointer hover:brightness-90",
         3: "bg-[#790CFF] rounded-lg text-white text-3xl font-normal cursor-pointer hover:brightness-90",

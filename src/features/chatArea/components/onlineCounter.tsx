@@ -12,8 +12,8 @@ export const OnlineCounter = () => {
 
   return (
     <div className="flex items-center gap-2.5">
-      <div className="bg-accent w-2 h-2 rounded-full" />
-      <span className="text-accent">{usersInRoom}</span>
+      <div className="bg-green-800 w-2 h-2 rounded-full" />
+      <span className="text-green-800">{usersInRoom}</span>
     </div>
   );
 };

@@ -3,7 +3,10 @@ import { Switch } from "@/components/ui/switch";
 
 export const RememberMe = () => {
   return (
-    <Field orientation="horizontal">
+    <Field
+      orientation="horizontal"
+      className="text-foreground"
+    >
       <Switch
         id="keepLogin"
         name="keepLogin"

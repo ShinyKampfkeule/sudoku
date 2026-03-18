@@ -74,7 +74,10 @@ app.prepare().then(() => {
 
     socket.on("joinRoom", (data: { room: string }) => {
       socket.join(data.room);
-      socket.emit("roomJoined", { room: data.room });
+      io.to(data.room).emit("roomJoined", {
+        room: data.room,
+        user: socket.userID,
+      });
 
       let size = 0;
 

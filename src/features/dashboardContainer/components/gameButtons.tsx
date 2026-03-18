@@ -19,21 +19,21 @@ export const GameButtons = () => {
   return (
     <div className="flex gap-4 shrink-0">
       <Button
-        className="w-[calc((100%-2rem)/3)] h-20 bg-accent hover:bg-accent/70"
+        className="w-[calc((100%-2rem)/3)] h-20 bg-blue-400 hover:bg-blue-500"
         onClick={() => handleOpenDialog("createRoom")}
       >
         <Users />
         Create Room
       </Button>
       <Button
-        className="w-[calc((100%-2rem)/3)] h-20 bg-orange-400 hover:bg-orange-400/70"
+        className="w-[calc((100%-2rem)/3)] h-20 bg-purple-400 hover:bg-purple-500"
         onClick={() => handleOpenDialog("joinRoom")}
       >
         <KeyRound />
         Join Room with Code
       </Button>
       <Button
-        className="w-[calc((100%-2rem)/3)] h-20 bg-blue-400 hover:bg-blue-400/70"
+        className="w-[calc((100%-2rem)/3)] h-20 bg-yellow-400 hover:bg-yellow-500"
         onClick={() => handleOpenDialog("showRooms")}
       >
         <Earth />

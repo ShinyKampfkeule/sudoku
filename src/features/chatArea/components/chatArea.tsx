@@ -17,7 +17,7 @@ export const ChatArea = ({ initialRoomData }: Props) => {
   }>(initialRoomData);
 
   return (
-    <div className="flex flex-col bg-primary w-80 h-full rounded-t-md">
+    <div className="flex flex-col bg-primary w-80 h-full rounded-t-md text-primary-foreground">
       <Header currentRoomData={currentRoomData} />
       <Chat />
       <Message roomID={currentRoomData.id} />

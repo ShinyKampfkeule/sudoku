@@ -25,12 +25,11 @@ export const UserInfo = () => {
         <span className="text-sm">{session ? session.user.name : ""}</span>
         <span className="text-xs">Level: {profile ? profile.level : ""}</span>
       </div>
-      <div className="flex justify-center items-center w-8 h-8 rounded-md text-primary">
-        <img
-          src={`https://robohash.org/${session ? session.user.name : "placeholder"}?set=set4`}
-          alt="User Image"
-        />
-      </div>
+      <img
+        src={`https://robohash.org/${session ? session.user.name : "placeholder"}?set=set4`}
+        alt="User Image"
+        className="w-8 h-8 rounded-md"
+      />
     </div>
   );
 };

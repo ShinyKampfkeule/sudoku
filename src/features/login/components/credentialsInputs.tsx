@@ -7,7 +7,7 @@ interface Props {
 
 export const CredentialsInputs = ({ createMode }: Props) => {
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex flex-col gap-4 w-full">
       {createMode && (
         <Input
           placeholder="Username"

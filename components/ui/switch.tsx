@@ -18,7 +18,7 @@ function Switch({
       data-size={size}
       className={cn(
         "data-[state=unchecked]:bg-red-900 ",
-        "data-[state=checked]:bg-input/30 ",
+        "data-[state=checked]:bg-input ",
         "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] ",
         "disabled:cursor-not-allowed disabled:opacity-50 ",
         "data-[size=default]:h-[1.15rem] data-[size=default]:w-8 data-[size=sm]:h-3.5 data-[size=sm]:w-6 ",
