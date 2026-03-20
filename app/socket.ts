@@ -1,9 +1,15 @@
 "use client";
 
-import { io } from "socket.io-client";
+import type { ClientToServerEvents } from "@/src/interfaces/clientToServerEvents";
+import type { ServerToClientEvents } from "@/src/interfaces/serverToClientEvents";
+import { SocketData } from "@/src/interfaces/socketData";
+import { io, Socket } from "socket.io-client";
 
 const URL = "http://localhost:3000";
-export const socket = io(URL, { autoConnect: false });
+export const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
+  URL,
+  { autoConnect: false },
+);
 
 socket.onAny((event, ...args) => {
   console.log(event, args);

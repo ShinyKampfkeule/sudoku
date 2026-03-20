@@ -1,3 +1,5 @@
+"use client";
+
 import { DialogContent, DialogFooter } from "@/components/ui/dialog";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Header } from "../../dialog/header";
@@ -24,7 +26,7 @@ export const AvailableRoomsDialog = ({ setOpenDialog, dialogType }: Props) => {
   if (dialogType !== "showRooms") return;
 
   return (
-    <DialogContent>
+    <DialogContent showCloseButton={false}>
       <Header
         title="Available Rooms"
         description="Available Rooms to join"
@@ -51,7 +53,6 @@ export const AvailableRoomsDialog = ({ setOpenDialog, dialogType }: Props) => {
         >
           Close
         </Button>
-        {/* <Button onClick={handleSubmit}>Confirm</Button> */}
       </DialogFooter>
     </DialogContent>
   );

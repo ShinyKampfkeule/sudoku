@@ -2,6 +2,10 @@ import { createServer } from "node:http";
 import next from "next";
 import { Server } from "socket.io";
 import { randomUUID } from "node:crypto";
+import type { SocketData } from "./src/interfaces/socketData";
+import type { ServerToClientEvents } from "./src/interfaces/serverToClientEvents";
+import type { ClientToServerEvents } from "./src/interfaces/clientToServerEvents";
+import type { InterServerEvents } from "./src/interfaces/interServerEvents";
 
 const dev = process.env.NODE_ENV !== "production";
 const hostname = "localhost";
@@ -12,7 +16,12 @@ const sessions = new Map<string, { userID: string; username: string }>();
 
 app.prepare().then(() => {
   const httpServer = createServer(handler);
-  const io = new Server(httpServer);
+  const io = new Server<
+    ClientToServerEvents,
+    ServerToClientEvents,
+    InterServerEvents,
+    SocketData
+  >(httpServer);
 
   io.use((socket, next) => {
     const sessionID = socket.handshake.auth.sessionID;
@@ -21,9 +30,9 @@ app.prepare().then(() => {
       const session = sessions.get(sessionID);
 
       if (session) {
-        socket.sessionID = sessionID;
-        socket.userID = session.userID;
-        socket.username = session.username;
+        socket.data.sessionID = sessionID;
+        socket.data.userID = session.userID;
+        socket.data.username = session.username;
         return next();
       }
     }
@@ -37,9 +46,9 @@ app.prepare().then(() => {
 
     const newSessionID = randomUUID();
 
-    socket.sessionID = newSessionID;
-    socket.userID = userID;
-    socket.username = username;
+    socket.data.sessionID = newSessionID;
+    socket.data.userID = userID;
+    socket.data.username = username;
 
     sessions.set(newSessionID, { userID, username });
 
@@ -47,54 +56,22 @@ app.prepare().then(() => {
   });
 
   io.on("connection", (socket) => {
-    socket.emit("session", {
-      sessionID: socket.sessionID,
-      userID: socket.userID,
-    });
-
-    socket.broadcast.emit("userConnected", {
-      userID: socket.id,
-      username: socket.username,
-    });
-
     socket.join("lobby");
 
-    socket.on("activeField", (activeField: number) => {
-      socket.broadcast.emit("activeField", activeField);
-    });
+    // User and Session related Events
 
-    socket.on("numberInput", (data: { field: number; added: boolean }) => {
-      socket.broadcast.emit("numberInput", data);
-    });
+    socket.emit("session", socket.data.sessionID, socket.data.userID);
 
-    socket.on("createGame", () => {
-      socket.join("test");
-      socket.emit("gameCreated", { room: "test" });
-    });
+    socket.broadcast.emit("userConnected", socket.id, socket.data.username);
 
-    socket.on("joinRoom", (data: { room: string }) => {
-      socket.join(data.room);
-      io.to(data.room).emit("roomJoined", {
-        room: data.room,
-        user: socket.userID,
-      });
-
-      let size = 0;
-
-      const room = io.sockets.adapter.rooms.get(data.room);
-      if (room) size = room.size;
-
-      io.in(data.room).emit("usersInRoom", size);
-    });
-
-    socket.on("getUsers", (data: { user: string }) => {
+    socket.on("getUsers", (userID) => {
       const users = [];
 
       for (const [id, socket] of io.of("/").sockets) {
-        if (socket.userID !== data.user) {
+        if (socket.data.userID !== userID) {
           users.push({
             userID: id,
-            username: socket.username,
+            username: socket.data.username,
           });
         }
       }
@@ -102,22 +79,50 @@ app.prepare().then(() => {
       socket.emit("users", users);
     });
 
-    socket.on("sendMessage", (data: { message: string; roomID: string }) => {
-      io.to(data.roomID).emit("receiveMessage", {
-        sender: socket.username,
-        message: data.message,
-        timestamp: Date.now(),
-      });
-    });
+    // Room related Events
 
-    socket.on("getUsersInRoom", (data: { room: string }) => {
+    socket.on("joinRoom", (room) => {
+      console.log(room);
+      socket.join(room);
+      io.to(room).emit("roomJoined", room, socket.data.userID);
+
       let size = 0;
 
-      const room = io.sockets.adapter.rooms.get(data.room);
-      console.log(room);
-      if (room) size = room.size;
+      const roomData = io.sockets.adapter.rooms.get(room);
+      if (roomData) size = roomData.size;
+
+      io.in(room).emit("usersInRoom", size);
+    });
+
+    socket.on("getUsersInRoom", (room) => {
+      let size = 0;
+
+      const roomData = io.sockets.adapter.rooms.get(room);
+
+      if (roomData) size = roomData.size;
 
       socket.emit("usersInRoom", size);
+    });
+
+    // Chat related Events
+
+    socket.on("sendMessage", (message, roomID) => {
+      io.to(roomID).emit(
+        "receiveMessage",
+        socket.data.username,
+        message,
+        Date.now(),
+      );
+    });
+
+    // Game related Events
+
+    socket.on("activeField", (activeField) => {
+      socket.broadcast.emit("activeField", activeField);
+    });
+
+    socket.on("numberInput", (field, added) => {
+      socket.broadcast.emit("numberInput", field, added);
     });
   });
 

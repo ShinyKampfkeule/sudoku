@@ -28,7 +28,7 @@ export const RoomEntry = ({ room }: Props) => {
 
   return (
     <div
-      className="flex gap-2 cursor-pointer hover:bg-primary p-2 rounded-md"
+      className="flex gap-2 cursor-pointer hover:bg-background/30 p-2 rounded-md"
       onClick={joinRoom}
     >
       <span>{room.name}</span>

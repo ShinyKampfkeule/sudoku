@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Chat } from "./chat";
 import { Header } from "./header";

@@ -5,7 +5,8 @@ export const OnlineCounter = () => {
   const [usersInRoom, setUsersInRoom] = useState<number>(0);
 
   useEffect(() => {
-    socket.on("usersInRoom", (size: number) => {
+    socket.on("usersInRoom", (size) => {
+      console.log(size);
       setUsersInRoom(size);
     });
   }, []);

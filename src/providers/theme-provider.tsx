@@ -2,6 +2,7 @@
 
 import { createContext, ReactNode, useContext, useState } from "react";
 import { Theme } from "../types/theme";
+import { Geist, Geist_Mono } from "next/font/google";
 
 type ThemeContextType = {
   theme: Theme;
@@ -10,17 +11,27 @@ type ThemeContextType = {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<Theme>("darkGreen");
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
-      <div
-        className="h-screen w-screen flex bg-background text-foreground"
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen w-screen flex bg-background text-foreground`}
         data-theme={theme}
       >
         {children}
-      </div>
+      </body>
     </ThemeContext.Provider>
   );
 };
