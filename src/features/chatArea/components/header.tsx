@@ -6,13 +6,14 @@ interface Props {
     id: string;
     name: string;
   };
+  usersInRoom: number;
 }
 
-export const Header = ({ currentRoomData }: Props) => {
+export const Header = ({ currentRoomData, usersInRoom }: Props) => {
   return (
     <div className="flex shrink-0 justify-between p-4 border-b border-b-secondary">
       <RoomDisplay currentRoomData={currentRoomData} />
-      <OnlineCounter />
+      <OnlineCounter usersInRoom={usersInRoom} />
     </div>
   );
 };

@@ -10,24 +10,32 @@ export const Chat = () => {
   >([]);
 
   useEffect(() => {
-    socket.on("connect", onConnect);
-    socket.on(
-      "receiveMessage",
-      (data: { sender: string; message: string; timestamp: number }) => {
-        setMessages((prev) => [
-          ...prev,
-          {
-            sender: data.sender,
-            message: data.message,
-            sent: data.timestamp,
-          },
-        ]);
-      },
-    );
+    const onReceiveMessage = (
+      sender: string,
+      message: string,
+      timestamp: number,
+    ) => {
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: sender,
+          message: message,
+          sent: timestamp,
+        },
+      ]);
+    };
 
-    function onConnect() {
+    const onConnect = () => {
       setChatStatus("Connected!");
-    }
+    };
+
+    socket.on("connect", onConnect);
+    socket.on("receiveMessage", onReceiveMessage);
+
+    return () => {
+      socket.off("connect", onConnect);
+      socket.off("receiveMessage", onReceiveMessage);
+    };
   }, []);
 
   return (

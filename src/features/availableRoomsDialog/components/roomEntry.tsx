@@ -13,13 +13,16 @@ export const RoomEntry = ({ room }: Props) => {
   const router = useRouter();
 
   useEffect(() => {
-    socket.on("usersInRoom", (size: number) => {
+    const handleUsersInRoom = (size: number) => {
       setUsersInRoom(size);
-    });
+    };
+    socket.on("usersInRoom", handleUsersInRoom);
 
-    socket.emit("getUsersInRoom", {
-      room: room.id,
-    });
+    socket.emit("getUsersInRoom", room.id);
+
+    return () => {
+      socket.off("usersInRoom", handleUsersInRoom);
+    };
   }, [room]);
 
   const joinRoom = () => {

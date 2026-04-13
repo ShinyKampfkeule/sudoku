@@ -9,7 +9,6 @@ export const getAvailableRooms = async (
     const json = (await res.json()) as {
       visibleRooms: AvailableRoomDataInterface[];
     };
-    console.log(json);
     setRooms(json.visibleRooms);
   }
 };

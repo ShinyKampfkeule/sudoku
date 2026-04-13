@@ -6,7 +6,7 @@ import { onSession } from "@/src/functions/onSession";
 import { useEffect } from "react";
 
 export const LoadingOverlay = () => {
-  const { data: data, isPending } = authClient.useSession();
+  const { data, isPending } = authClient.useSession();
 
   useEffect(() => {
     if (!isPending && data) {
@@ -19,9 +19,13 @@ export const LoadingOverlay = () => {
 
       socket.on("session", onSession);
 
-      socket.auth = { username: sessionID.user.name, userID: session.user.id };
+      socket.auth = { username: data.user.name, userID: data.user.id };
       socket.connect();
       socket.emit("joinRoom", "lobby");
+
+      return () => {
+        socket.off("session", onSession);
+      };
     }
   }, [data, isPending]);
 

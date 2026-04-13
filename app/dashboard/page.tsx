@@ -1,3 +1,5 @@
+"use client";
+
 import { Header } from "@/src/features/header/components/header";
 import { ChatArea } from "@/src/features/chatArea/components/chatArea";
 import { LoadingOverlay } from "@/src/features/loadingOverlay/loadingOverlay";

@@ -60,7 +60,7 @@ app.prepare().then(() => {
 
     // User and Session related Events
 
-    socket.emit("session", socket.data.sessionID, socket.data.userID);
+    socket.emit("session", socket.data.sessionID);
 
     socket.broadcast.emit("userConnected", socket.id, socket.data.username);
 
@@ -82,9 +82,19 @@ app.prepare().then(() => {
     // Room related Events
 
     socket.on("joinRoom", (room) => {
-      console.log(room);
       socket.join(room);
       io.to(room).emit("roomJoined", room, socket.data.userID);
+
+      let size = 0;
+
+      const roomData = io.sockets.adapter.rooms.get(room);
+      if (roomData) size = roomData.size;
+
+      io.in(room).emit("usersInRoom", size);
+    });
+
+    socket.on("leaveRoom", (room) => {
+      socket.leave(room);
 
       let size = 0;
 
@@ -102,6 +112,30 @@ app.prepare().then(() => {
       if (roomData) size = roomData.size;
 
       socket.emit("usersInRoom", size);
+    });
+
+    socket.on("getListOfUsersInRoom", async (room) => {
+      const usersInRoom = io.sockets.adapter.rooms.get(room);
+      const socketsInRoom = await io.fetchSockets();
+      const userIDs: string[] = [];
+
+      if (usersInRoom) {
+        usersInRoom.forEach(async (socketID) => {
+          if (socketID !== socket.id) {
+            const socketData = socketsInRoom.filter(
+              (socket) => socket.id === socketID,
+            )[0];
+            console.log(socketData.data.username);
+            userIDs.push(socketData.data.userID);
+          }
+        });
+      }
+
+      socket.emit("sendListOfUsersInRoom", userIDs);
+    });
+
+    socket.on("playersReadyStatus", (roomID, isReady) => {
+      socket.broadcast.to(roomID).emit("opponentsReadyStatus", isReady);
     });
 
     // Chat related Events

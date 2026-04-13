@@ -15,7 +15,7 @@ export const Message = ({ roomID }: Props) => {
     const data = new FormData(event.currentTarget);
     const message = data.get("message") as string;
 
-    socket.emit("sendMessage", { message, roomID });
+    socket.emit("sendMessage", message, roomID);
   };
 
   return (

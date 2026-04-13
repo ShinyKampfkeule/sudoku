@@ -10,9 +10,10 @@ interface Props {
     id: string;
     name: string;
   };
+  usersInRoom: number;
 }
 
-export const ChatArea = ({ initialRoomData }: Props) => {
+export const ChatArea = ({ initialRoomData, usersInRoom }: Props) => {
   const [currentRoomData, setCurrentRoomData] = useState<{
     id: string;
     name: string;
@@ -20,7 +21,10 @@ export const ChatArea = ({ initialRoomData }: Props) => {
 
   return (
     <div className="flex flex-col bg-primary w-80 h-full rounded-t-md text-primary-foreground">
-      <Header currentRoomData={currentRoomData} />
+      <Header
+        currentRoomData={currentRoomData}
+        usersInRoom={usersInRoom}
+      />
       <Chat />
       <Message roomID={currentRoomData.id} />
     </div>

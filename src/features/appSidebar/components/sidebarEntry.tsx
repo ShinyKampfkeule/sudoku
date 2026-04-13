@@ -17,7 +17,7 @@ export const SidebarEntry = ({ icon, label }: Props) => {
   return (
     <div
       className={`relative group flex px-4 py-2 gap-2 cursor-pointer rounded-r-md ${pathIncludesLabel ? "bg-secondary text-primary" : label === "Logout" ? "text-red-400" : ""}`}
-      onClick={() => handleClick(label, router)}
+      onClick={() => handleClick(label, router, pathname)}
     >
       {!pathIncludesLabel && (
         <div

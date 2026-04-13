@@ -12,6 +12,7 @@ export default function Login() {
         src={sudoku}
         alt="Coffe Table with Sudoku from Newspaper"
         className="absolute w-full h-full"
+        id="backgroundImage"
       />
       <LoginForm />
     </div>

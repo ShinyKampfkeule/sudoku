@@ -12,6 +12,7 @@ import { OpponentSudokuBoard } from "@/src/features/opponentSudokuBoard/componen
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { socket } from "../socket";
+import { authClient } from "@/lib/auth-client";
 
 export default function Game() {
   const currentPuzzle: string = "1";
@@ -60,6 +61,7 @@ export default function Game() {
   const [users, setUsers] = useState<{ userID: string; username: string }[]>(
     [],
   );
+  const { data, isPending } = authClient.useSession();
 
   const isSubmitting = useRef(false);
 
@@ -74,7 +76,9 @@ export default function Game() {
     if (socket.connected) {
       onConnect();
 
-      socket.emit("getUsers", { user: socket.id });
+      if (!isPending && data) {
+        socket.emit("getUsers", data?.user.id);
+      }
     }
 
     function onConnect() {
@@ -91,33 +95,22 @@ export default function Game() {
       setTransport("N/A");
     }
 
-    const onGameCreated = (data: { room: string }) => {
-      setGameRoom(data.room);
-    };
-
     const onUsers = (users: { userID: string; username: string }[]) => {
       setUsers(users);
     };
 
-    const onUserConnected = (data: { userID: string; username: string }) => {
-      setUsers((prev) => [...prev, data]);
-    };
-
-    const onGameJoined = (data: { room: string }) => {
-      setGameRoom(data.room);
+    const onUserConnected = (userID: string, username: string) => {
+      setUsers((prev) => [...prev, { userID: userID, username: username }]);
     };
 
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
-    socket.on("gameCreated", onGameCreated);
     socket.on("users", onUsers);
     socket.on("userConnected", onUserConnected);
-    socket.on("gameJoined", onGameJoined);
 
     return () => {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
-      socket.off("game created", onGameCreated);
       socket.off("users", onUsers);
       socket.off("userConnected", onUserConnected);
     };
@@ -132,11 +125,6 @@ export default function Game() {
 
     if (isSubmitting.current) return;
     isSubmitting.current = true;
-
-    const data = new FormData(event.currentTarget);
-    const room = data.get("gameRoom") as string;
-
-    socket.emit("joinGame", { room });
   };
 
   return (

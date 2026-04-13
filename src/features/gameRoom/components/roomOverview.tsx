@@ -1,47 +1,61 @@
 import { ActiveRoomDataInterface } from "@/src/interfaces/activeRoomData";
-import { UserDisplay } from "./userDisplay";
 import { Button } from "@/components/ui/button";
-import { OpponentDisplay } from "./opponentDisplay";
 import { useEffect, useState } from "react";
 import { socket } from "@/app/socket";
 import { BigUserIcon } from "./bigUserIcon";
 import { authClient } from "@/lib/auth-client";
+import { DisplayPlayerInformation } from "./displayPlayerInformation";
 
 interface Props {
   roomData: ActiveRoomDataInterface;
+  userIsHost: boolean;
 }
 
-export const RoomOverview = ({ roomData }: Props) => {
-  const [opponentID, setOpponentID] = useState<string | null>(null);
-  const { data: session } = authClient.useSession();
-  const [profile, setProfile] = useState<any>(null);
+export const RoomOverview = ({ roomData, userIsHost }: Props) => {
+  const [opponentID, setOpponentID] = useState<string | undefined>(undefined);
+  const { data } = authClient.useSession();
+  const [userIsReady, setUserIsReady] = useState(false);
+  const [opponentIsReady, setOpponentIsReady] = useState(false);
+
+  console.log(userIsHost);
 
   useEffect(() => {
-    (async () => {
-      const userId = session?.user.id;
-      if (!userId) return;
-      const res = await fetch(`/api/user/${userId}`);
-      if (res.ok) {
-        const json = await res.json();
-        setProfile(json.user);
+    socket.emit("joinRoom", roomData.id);
+
+    const onUsersInRoom = async (usersInRoom: string[]) => {
+      const opponentID = usersInRoom.filter(
+        (user) => user !== data?.user.id,
+      )[0];
+      setOpponentID(opponentID);
+    };
+
+    const onRoomJoined = (room: string, user: string) => {
+      if (room !== roomData.id) return;
+      if (user === data?.user.id) {
+        socket.emit("getListOfUsersInRoom", room);
+        socket.on("sendListOfUsersInRoom", onUsersInRoom);
+        return;
       }
-    })();
+      setOpponentID(user);
+    };
 
-    socket.emit("joinRoom", { room: roomData.id });
+    const onOpponentsReadyStatusUpdated = (isReady: boolean) => {
+      setOpponentIsReady(isReady);
+    };
 
-    socket.on("roomJoined", (data: { room: string; user: string }) => {
-      alert("Joined");
-      if (data.user === socket.userID) return;
-      setOpponentID(data.user);
-      alert(`User ${data.user} joined the Room!`);
-    });
+    socket.on("roomJoined", onRoomJoined);
+    socket.on("opponentsReadyStatus", onOpponentsReadyStatusUpdated);
 
-    // socket.on("");
-  }, [roomData]);
+    return () => {
+      socket.off("roomJoined", onRoomJoined);
+      socket.off("sendListOfUsersInRoom", onUsersInRoom);
+      socket.off("opponentsReadyStatus", onOpponentsReadyStatusUpdated);
+    };
+  }, [roomData, data]);
 
   return (
     <div className="relative overflow-hidden flex flex-col items-center justify-between w-[calc(100%-21rem)] h-full bg-primary rounded-t-md p-16 gap-32">
-      <BigUserIcon userID={session?.user.id} />
+      <BigUserIcon userID={data?.user.id} />
       <BigUserIcon
         userID={opponentID}
         inverted
@@ -59,10 +73,30 @@ export const RoomOverview = ({ roomData }: Props) => {
       <div className="flex flex-col items-center justify-center gap-16 z-1">
         <span className="text-7xl z-1">0:0</span>
         <div className="flex justify-center items-center gap-16">
-          <UserDisplay profile={profile} />
-          <OpponentDisplay opponentID={opponentID} />
+          <DisplayPlayerInformation
+            playerID={data?.user.id}
+            playerIsReady={userIsReady}
+            setPlayerIsReady={setUserIsReady}
+            roomData={roomData}
+          />
+          <DisplayPlayerInformation
+            playerID={opponentID}
+            playerIsReady={opponentIsReady}
+            setPlayerIsReady={setOpponentIsReady}
+            roomData={roomData}
+            isOpponent
+          />
         </div>
-        <Button className="w-48 h-12">Play</Button>
+        <div className="w-50">
+          {userIsHost && (
+            <Button
+              className="w-48 h-12"
+              disabled={!userIsReady || !opponentIsReady}
+            >
+              Start Game
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

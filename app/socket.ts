@@ -2,7 +2,6 @@
 
 import type { ClientToServerEvents } from "@/src/interfaces/clientToServerEvents";
 import type { ServerToClientEvents } from "@/src/interfaces/serverToClientEvents";
-import { SocketData } from "@/src/interfaces/socketData";
 import { io, Socket } from "socket.io-client";
 
 const URL = "http://localhost:3000";
